@@ -9,7 +9,7 @@ It should finally save the city names and temperatures in a new csv.
 
 # Dependencies
 import requests as req
-import json
+# import json
 import csv
 
 # OpenWeather API Key
@@ -36,6 +36,7 @@ with open(csvpath) as csvfile:
         url = "http://api.openweathermap.org/data/2.5/weather?"
         query_url = url + "q=" + city + "&appid=" + api_key+ "&units=Imperial"
 
+        print(query_url)
         # Make a request to the endpoint url
         weather_response = req.get(query_url)
         weather_json = weather_response.json()
@@ -44,17 +45,18 @@ with open(csvpath) as csvfile:
         print(weather_json)
 
         # # Extract the temperature for each city
-        temperature = weather_json["main"]["temperature"]
+        temperature = weather_json["main"]["temp"]
 
         # # Print the Temperatures
         print(temperature)
+
 
         # Draw a separating line
         print("---------------")
 
         # Write the contents for each to a new CSV
         output_file = "output.csv"
-        with open(output_file, "w") as csvfile:
+        with open(output_file, "a", newline='') as csvfile:
 
             # Initialize the csv.writer
             csvwriter = csv.writer(csvfile, delimiter=",")
