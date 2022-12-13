@@ -13,10 +13,10 @@ import json
 import csv
 
 # OpenWeather API Key
-api_key = 417bfe8effcb6b9aa355a4de24d62458
+api_key = "417bfe8effcb6b9aa355a4de24d62458"
 
 # Specify File Path
-csvpath = "cities.txt"
+csvpath = "cities.csv"
 
 
 # Read CSV
@@ -30,11 +30,11 @@ with open(csvpath) as csvfile:
 
         # Print each row of the csv
         print(row[0])
-
+        city = row[0]
         # Build an endpoint URL to the OpenWeatherMap Service
         url = "http://api.openweathermap.org/data/2.5/weather?"
         query_url = url + "q=" + city + "&appid=" + api_key+ "&units=Imperial"
-
+        print(query_url)
         # Make a request to the endpoint url
         weather_response = req.get(query_url)
         weather_json = weather_response.json()
@@ -43,7 +43,7 @@ with open(csvpath) as csvfile:
         print(weather_json)
 
         # # Extract the temperature for each city
-        temperature = weather_json["main"]["temperature"]
+        temperature = weather_json["main"]["temp"]
 
         # # Print the Temperatures
         print(temperature)
@@ -53,7 +53,7 @@ with open(csvpath) as csvfile:
 
         # Write the contents for each to a new CSV
         output_file = "output.csv"
-        with open(output_file, "w") as csvfile:
+        with open(output_file, "a") as csvfile:
 
             # Initialize the csv.writer
             csvwriter = csv.writer(csvfile, delimiter=",")
